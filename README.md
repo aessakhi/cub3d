@@ -7,4 +7,5 @@ Etapes:
 - Verif des textures et des couleurs (Un seul param? Les fichiers existent? Couleur dans le bon format?)
 - Verif de la map. Pour rester consistent, je remplace les tabulations par des espaces. Je verifie que la map est terminee en "remplissant" l'exterieur de la map avec des 'O'. Pour chacun de ces 'O', je verifie ensuite qu'aucun n'est en contact avec des espaces. Si c'est le cas, la map est consideree comme fermee. Les 'O' seront remplaces par des '1' (Mur), les espaces a l'interieur de la map par des '0' (Sol).
 - Partie raycasting est la partie la plus simple. Check https://lodev.org/cgtutor/raycasting.html 
-- Besoin d'ajouter deplacement, d'utiliser les textures donnees pour les murs, couleur des sols et plafonds, et pour finir respect norme/flags.
+- Deplacement ok 25/09
+- Besoin d'ajouter utilisation des textures donnees pour les murs, couleur des sols et plafonds, et pour finir respect norme/flags.
