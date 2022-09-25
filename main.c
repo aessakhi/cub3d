@@ -6,7 +6,7 @@
 /*   By: aessakhi <aessakhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 18:12:41 by aessakhi          #+#    #+#             */
-/*   Updated: 2022/09/25 15:06:32 by aessakhi         ###   ########.fr       */
+/*   Updated: 2022/09/25 16:48:55 by aessakhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ void	get_initial_player_pos(t_ray *ray, t_map *map)
 			if (map->map[i][j] == 'N' || map->map[i][j] == 'S' || map->map[i][j] == 'E' ||map->map[i][j] == 'W')
 			{
 				printf("Player found at X = %d, Y = %d\n", j, i);
-				ray->pos_x = (double)j;
-				ray->pos_y = (double)i;
+				ray->pos_x = (double)j + 0.5;
+				ray->pos_y = (double)i + 0.5;
 				return ;
 			}
 			j++;
@@ -56,6 +56,90 @@ int		close_win(t_data *data)
 	free_map(data->map);
 	free(data->mlx_ptr);
 	exit(EXIT_SUCCESS);
+	return (0);
+}
+
+void	rotate_left(t_data *data)
+{
+	double	olddir_x;
+	double	oldplane_x = data->ray.plane_x;
+
+	olddir_x = data->ray.dir_x;
+	oldplane_x = data->ray.plane_x;
+	data->ray.dir_x = data->ray.dir_x * cos(-data->ray.rot_speed) - data->ray.dir_y * sin(-data->ray.rot_speed);
+	data->ray.dir_y = olddir_x * sin(-data->ray.rot_speed) + data->ray.dir_y * cos(-data->ray.rot_speed);
+	data->ray.plane_x = data->ray.plane_x * cos(-data->ray.rot_speed) - data->ray.plane_y * sin(-data->ray.rot_speed);
+	data->ray.plane_y = oldplane_x * sin(-data->ray.rot_speed) + data->ray.plane_y * cos(-data->ray.rot_speed);
+	mlx_destroy_image(data->mlx_ptr, data->img.img);
+	data->img.img = mlx_new_image(data->mlx_ptr, data->ray.screen_x, data->ray.screen_y);
+	data->img.addr = mlx_get_data_addr(data->img.img, &data->img.bits_per_pixel, &data->img.line_length, &data->img.endian);
+	start_raycasting(&data->ray, data);
+	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->img.img, 0, 0);
+}
+
+void	rotate_right(t_data *data)
+{
+	double	olddir_x;
+	double	oldplane_x = data->ray.plane_x;
+
+	olddir_x = data->ray.dir_x;
+	oldplane_x = data->ray.plane_x;
+	data->ray.dir_x = data->ray.dir_x * cos(data->ray.rot_speed) - data->ray.dir_y * sin(data->ray.rot_speed);
+	data->ray.dir_y = olddir_x * sin(data->ray.rot_speed) + data->ray.dir_y * cos(data->ray.rot_speed);
+	data->ray.plane_x = data->ray.plane_x * cos(data->ray.rot_speed) - data->ray.plane_y * sin(data->ray.rot_speed);
+	data->ray.plane_y = oldplane_x * sin(data->ray.rot_speed) + data->ray.plane_y * cos(data->ray.rot_speed);
+	mlx_destroy_image(data->mlx_ptr, data->img.img);
+	data->img.img = mlx_new_image(data->mlx_ptr, data->ray.screen_x, data->ray.screen_y);
+	data->img.addr = mlx_get_data_addr(data->img.img, &data->img.bits_per_pixel, &data->img.line_length, &data->img.endian);
+	start_raycasting(&data->ray, data);
+	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->img.img, 0, 0);
+}
+
+void	move_up(t_data *data)
+{
+	data->ray.pos_x += data->ray.dir_x * data->ray.move_speed;
+	data->ray.pos_y += data->ray.dir_y * data->ray.move_speed;
+	printf("Player pos = %f / %f\n", data->ray.pos_x, data->ray.pos_y);
+	mlx_destroy_image(data->mlx_ptr, data->img.img);
+	data->img.img = mlx_new_image(data->mlx_ptr, data->ray.screen_x, data->ray.screen_y);
+	data->img.addr = mlx_get_data_addr(data->img.img, &data->img.bits_per_pixel, &data->img.line_length, &data->img.endian);
+	start_raycasting(&data->ray, data);
+	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->img.img, 0, 0);
+}
+
+void	move_down(t_data *data)
+{
+	data->ray.pos_x -= data->ray.dir_x * data->ray.move_speed;
+	data->ray.pos_y -= data->ray.dir_y * data->ray.move_speed;
+	printf("Player pos = %f / %f\n", data->ray.pos_x, data->ray.pos_y);
+	mlx_destroy_image(data->mlx_ptr, data->img.img);
+	data->img.img = mlx_new_image(data->mlx_ptr, data->ray.screen_x, data->ray.screen_y);
+	data->img.addr = mlx_get_data_addr(data->img.img, &data->img.bits_per_pixel, &data->img.line_length, &data->img.endian);
+	start_raycasting(&data->ray, data);
+	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->img.img, 0, 0);
+}
+
+int	handle_keypress(int keysym, t_data *data)
+{	
+	if (keysym == XK_Escape)
+	{
+		//A REMPLACER PAR LA FONCTION POUR TOUT FREE
+		mlx_destroy_window(data->mlx_ptr, data->win_ptr);
+		mlx_destroy_image(data->mlx_ptr, data->img.img);
+		mlx_destroy_display(data->mlx_ptr);
+		free_map(data->map);
+		free(data->mlx_ptr);
+		exit(EXIT_SUCCESS);
+		return (0);
+	}
+	if (keysym == XK_d)
+		rotate_right(data);
+	if (keysym == XK_a)
+		rotate_left(data);
+	if (keysym == XK_s)
+		move_down(data);
+	if (keysym == XK_w)
+		move_up(data);
 	return (0);
 }
 

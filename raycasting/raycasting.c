@@ -6,7 +6,7 @@
 /*   By: aessakhi <aessakhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/25 15:04:16 by aessakhi          #+#    #+#             */
-/*   Updated: 2022/09/25 15:10:32 by aessakhi         ###   ########.fr       */
+/*   Updated: 2022/09/25 17:06:02 by aessakhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,12 @@ void	start_raycasting(t_ray *ray, t_data *data)
 
 	color = 100000; //JUSTE POUR TEST, SERA CHANGEE PAR LA SUITE
 	//Ne pas oublier de changer les valeurs pos_x pos_y dir_x dir_y plane_x plane_y en fonction de l'orientation du joueur
-	ray->dir_x = 0;
+/* 	ray->dir_x = 0;
 	ray->dir_y = -1;
 	ray->plane_x = 0.66;
-	ray->plane_y = 0;
+	ray->plane_y = 0; */
 	ray->x = 0;
-	while (ray->x <= ray->screen_x)
+	while (ray->x < ray->screen_x)
 	{
 		color = 100000;
 		ray->camera_x = 2 * ray->x / (double)(ray->screen_x) - 1;
@@ -31,7 +31,7 @@ void	start_raycasting(t_ray *ray, t_data *data)
 		ray->raydir_y = ray->dir_y + ray->plane_y * ray->camera_x;
 		ray->map_x = (int)(ray->pos_x);
 		ray->map_y = (int)(ray->pos_y);
-		ray->deltadist_x = sqrt(1 + ((ray->raydir_y * ray->raydir_y) / (ray->raydir_x * ray->raydir_y)));
+		ray->deltadist_x = sqrt(1 + ((ray->raydir_y * ray->raydir_y) / (ray->raydir_x * ray->raydir_x)));
 		ray->deltadist_y = sqrt(1 + ((ray->raydir_x * ray->raydir_x) / (ray->raydir_y * ray->raydir_y)));
 		ray->hit = 0;
 		if (ray->raydir_x < 0)
@@ -106,5 +106,6 @@ void	render(t_data data)
 	mlx_loop_hook(data.mlx_ptr, &handle_no_event, &data);
 	mlx_hook(data.win_ptr, ClientMessage,
 		StructureNotifyMask, &close_win, &data);
+	mlx_hook(data.win_ptr, KeyPress, KeyPressMask, &handle_keypress, &data);
 	mlx_loop(data.mlx_ptr);
 }

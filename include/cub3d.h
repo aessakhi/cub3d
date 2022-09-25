@@ -6,7 +6,7 @@
 /*   By: aessakhi <aessakhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 18:13:35 by aessakhi          #+#    #+#             */
-/*   Updated: 2022/09/25 15:09:24 by aessakhi         ###   ########.fr       */
+/*   Updated: 2022/09/25 16:24:54 by aessakhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,8 @@ typedef struct	s_ray
 	int		x; //permet de parcourir tous les rayons
 	int		screen_x;
 	int		screen_y;
+	double	rot_speed;
+	double	move_speed;
 }					t_ray;
 
 typedef struct s_texture_check
@@ -213,5 +215,6 @@ void	my_mlx_pixel_put(t_img *img, int x, int y, int color);
 //Hooks & loops
 int	handle_no_event(t_data *data);
 int		close_win(t_data *data);
+int	handle_keypress(int keysym, t_data *data);
 
 #endif

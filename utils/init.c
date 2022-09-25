@@ -6,7 +6,7 @@
 /*   By: aessakhi <aessakhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 17:44:29 by aessakhi          #+#    #+#             */
-/*   Updated: 2022/09/25 15:06:18 by aessakhi         ###   ########.fr       */
+/*   Updated: 2022/09/25 16:25:45 by aessakhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,8 @@ void	init_raycasting(t_ray *ray)
 	ray->pos_x = 0;
 	ray->pos_y = 0;
 	ray->dir_x = 0;
-	ray->dir_y = 0;
-	ray->plane_x = 0;
+	ray->dir_y = 1;
+	ray->plane_x = -0.66;
 	ray->plane_y = 0;
 	ray->raydir_x = 0;
 	ray->raydir_y = 0;
@@ -63,4 +63,6 @@ void	init_raycasting(t_ray *ray)
 	ray->x = 0;
 	ray->screen_x = 0;
 	ray->screen_y = 0;
+	ray->rot_speed = 0.10;
+	ray->move_speed = 0.10;
 }
