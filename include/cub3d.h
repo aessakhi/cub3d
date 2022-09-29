@@ -6,7 +6,7 @@
 /*   By: aessakhi <aessakhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 18:13:35 by aessakhi          #+#    #+#             */
-/*   Updated: 2022/09/25 16:24:54 by aessakhi         ###   ########.fr       */
+/*   Updated: 2022/09/28 18:14:57 by aessakhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <sys/stat.h>
 # include <fcntl.h>
 # include <string.h>
+# include <errno.h>
 # include <math.h>
 # include "../get_next_line/get_next_line.h"
 # include "../minilibx-linux/mlx.h"
@@ -105,15 +106,22 @@ typedef struct	s_img
 	int		bits_per_pixel;
 	int		line_length;
 	int		endian;
+	int		width;
+	int		height;
 }	t_img;
 
-typedef struct s_assets
+typedef struct s_tex
 {
-	t_img	*NO;
-	t_img	*SO;
-	t_img	*WE;
-	t_img	*EA;
-}	t_assets;
+	t_img	NO;
+	t_img	SO;
+	t_img	WE;
+	t_img	EA;
+	double	wall_x;
+	int		x;
+	int		y;
+	double	step;
+	double	pos;
+}	t_tex;
 
 typedef struct s_data
 {
@@ -121,7 +129,7 @@ typedef struct s_data
 	void		*win_ptr;
 	t_ray		ray;
 	t_img		img;
-	t_assets	*assets;
+	t_tex	tex[4];
 	t_map		*map;
 }	t_data;
 

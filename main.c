@@ -50,6 +50,7 @@ void	my_mlx_pixel_put(t_img *img, int x, int y, int color)
 int		close_win(t_data *data)
 {
 	//AJOUT FONCTION POUR TOUT FREE;
+	//Fonction pour free les textures des murs;
 	mlx_destroy_window(data->mlx_ptr, data->win_ptr);
 	mlx_destroy_image(data->mlx_ptr, data->img.img);
 	mlx_destroy_display(data->mlx_ptr);
@@ -97,8 +98,10 @@ void	rotate_right(t_data *data)
 
 void	move_up(t_data *data)
 {
-	data->ray.pos_x += data->ray.dir_x * data->ray.move_speed;
-	data->ray.pos_y += data->ray.dir_y * data->ray.move_speed;
+	if (data->map->map[(int)(data->ray.pos_y)][(int)(data->ray.pos_x + data->ray.dir_x * data->ray.move_speed)] != '1')
+		data->ray.pos_x += data->ray.dir_x * data->ray.move_speed;
+	if (data->map->map[(int)(data->ray.pos_y + data->ray.dir_y * data->ray.move_speed)][(int)(data->ray.pos_x)] != '1')
+		data->ray.pos_y += data->ray.dir_y * data->ray.move_speed;
 	printf("Player pos = %f / %f\n", data->ray.pos_x, data->ray.pos_y);
 	mlx_destroy_image(data->mlx_ptr, data->img.img);
 	data->img.img = mlx_new_image(data->mlx_ptr, data->ray.screen_x, data->ray.screen_y);
@@ -109,8 +112,10 @@ void	move_up(t_data *data)
 
 void	move_down(t_data *data)
 {
-	data->ray.pos_x -= data->ray.dir_x * data->ray.move_speed;
-	data->ray.pos_y -= data->ray.dir_y * data->ray.move_speed;
+	if (data->map->map[(int)(data->ray.pos_y)][(int)(data->ray.pos_x - data->ray.dir_x * data->ray.move_speed)] != '1')
+		data->ray.pos_x -= data->ray.dir_x * data->ray.move_speed;
+	if (data->map->map[(int)(data->ray.pos_y - data->ray.dir_y * data->ray.move_speed)][(int)(data->ray.pos_x)] != '1')
+		data->ray.pos_y -= data->ray.dir_y * data->ray.move_speed;
 	printf("Player pos = %f / %f\n", data->ray.pos_x, data->ray.pos_y);
 	mlx_destroy_image(data->mlx_ptr, data->img.img);
 	data->img.img = mlx_new_image(data->mlx_ptr, data->ray.screen_x, data->ray.screen_y);
@@ -149,6 +154,25 @@ int	handle_no_event(t_data *data)
 	return (0);
 }
 
+void	get_texture_img(t_img *img, t_data *data, char *path)
+{
+	img->img = mlx_xpm_file_to_image(data->mlx_ptr, path, &img->width, &img->height);
+	if (img->img == NULL)
+	{
+		printf("Error\n");
+		//Maxi free ici pls
+		exit(EXIT_FAILURE);
+	}
+	img->addr = mlx_get_data_addr(img->img, &img->bits_per_pixel, &img->line_length, &img->endian);
+}
+
+void	get_textures_img(t_data *data)
+{
+	get_texture_img(&data->tex->NO, data, data->map->path_to_no);
+	get_texture_img(&data->tex->SO, data, data->map->path_to_so);
+	get_texture_img(&data->tex->WE, data, data->map->path_to_we);
+	get_texture_img(&data->tex->EA, data, data->map->path_to_ea);
+}
 
 int	main(int argc, char **argv)
 {
@@ -163,6 +187,7 @@ int	main(int argc, char **argv)
 		printf("Error MLX INIT NE PAS OUBLIER D'AJOUTER LA FONCTION POUR FREE\n");
 	// mlx_get_screen_size(data.mlx_ptr, &data.ray.screenx, &data.ray.screeny);
 	init_raycasting(&data.ray);
+	get_textures_img(&data);
 	printf("Screen X = %d, screen y = %d\n", data.ray.screen_x, data.ray.screen_y);
 	data.ray.screen_x = 1600; // VALEURS TESTS, LES VRAIES VALEURS SERONT RECUP AVEC MLX GET SCREEN SIZE
 	data.ray.screen_y = 900; // SAME AS ABOVE

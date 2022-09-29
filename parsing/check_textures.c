@@ -12,6 +12,41 @@
 
 #include "../include/cub3d.h"
 
+int	check_file_is_xpm(char	**tmp, char *ext, t_map *map)
+{
+	int	i;
+	int	j;
+
+	i = ft_strlen(tmp[1]) - 4;
+	j = 0;
+	while (tmp[1][i])
+	{
+		if (tmp[1][i] != ext[j])
+		{
+			free_dbl_array(tmp);
+			ft_perror_parsing(map, "Texture file is not a .xpm file");
+		}
+		i++;
+		j++;
+	}
+	return (1);
+}
+
+void	check_texture_file(char **tmp, t_map *map)
+{
+	int	fd;
+
+	fd = open(tmp[1], O_RDWR);
+	if (fd == -1)
+	{
+		free_dbl_array(tmp);
+		if (errno == EISDIR)
+			ft_perror_parsing(map, "Texture file is a directory");
+		ft_perror_parsing(map, "No such file or directory");
+	}
+	close(fd);
+}
+
 void	check_texture_path(t_map *map, int i)
 {
 	char	**tmp;
@@ -24,12 +59,8 @@ void	check_texture_path(t_map *map, int i)
 		free_dbl_array(tmp);
 		ft_perror_parsing(map, "Invalid path to texture");
 	}
-/* 	fd = open(tmp[1], O_RDONLY);
-	if (fd == -1)
-	{
-		ft_perror_parsing(map, "No such file or directory");
-	} */
-	//Check if XPM?
+	check_texture_file(tmp, map);
+	check_file_is_xpm(tmp, ".xpm", map);
 	if (i == 0)
 		map->path_to_no = ft_strdup(tmp[1]);
 	if (i == 1)

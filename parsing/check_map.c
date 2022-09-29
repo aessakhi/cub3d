@@ -39,8 +39,9 @@ void	parse_map(t_map *map)
 	check_bottom_side(map->map, &error);
 	replace(map->map, ' ', '0');
 	final_map_check(map->map, &error);
+	printf("Error player %d\n", error.player);
 	if (error.map_not_closed || error.player != 1)
-		printf("ERROR\n");
+		ft_perror_parsing(map, "Player");
 	//Parse des lignes intermédiaires. Premier et dernier caractères doivent être des 1
 	//Pareil pour la dernière ligne
 }

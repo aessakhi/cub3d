@@ -50,10 +50,13 @@ void	check_if_file_exists(char *file)
 {
 	int	fd;
 
-	fd = open(file, O_RDONLY);
+	fd = open(file, O_RDWR);
 	if (fd == -1)
 	{
-		printf("Error\nNo such file or directory\n");
+		if (errno = EISDIR)
+			printf("Error\nFile is a directory\n");
+		else
+			printf("Error\nNo such file or directory\n");
 		exit(EXIT_FAILURE);
 	}
 	close(fd);
