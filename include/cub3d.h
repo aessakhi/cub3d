@@ -71,6 +71,8 @@ typedef struct	s_ray
 	int		x; //permet de parcourir tous les rayons
 	int		screen_x;
 	int		screen_y;
+	int		floor_color;
+	int		ceiling_color;
 	double	rot_speed;
 	double	move_speed;
 }					t_ray;

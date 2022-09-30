@@ -38,6 +38,30 @@ void	draw_wall(t_ray *ray, t_tex *tex, t_img *img, t_data *data)
 	}
 }
 
+void	draw_floor(t_ray *ray, t_data *data)
+{
+	int	y;
+
+	y = ray->drawend;
+	while (y < ray->screen_y)
+	{
+		my_mlx_pixel_put(&data->img, ray->x, y, ray->floor_color);
+		y++;
+	}
+}
+
+void	draw_ceiling(t_ray *ray, t_data *data)
+{
+	int	y;
+
+	y = 0;
+	while (y < ray->drawstart)
+	{
+		my_mlx_pixel_put(&data->img, ray->x, y, ray->ceiling_color);
+		y++;
+	}
+}
+
 void	choose_wall_side(t_ray *ray, t_data *data)
 {
 	if (ray->side == 0 && ray->raydir_x < 0)
@@ -124,6 +148,8 @@ void	start_raycasting(t_ray *ray, t_data *data)
 			color = color / 2;
 		int	cpy_drawstart = ray->drawstart;
 		int	cpy_drawend = ray->drawend;
+		draw_ceiling(ray, data);
+		draw_floor(ray, data);
 		choose_wall_side(ray, data);
 /* 		while (cpy_drawstart < ray->drawend)
 		{

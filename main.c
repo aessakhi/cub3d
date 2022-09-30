@@ -14,6 +14,30 @@
 
 //RETAPER LE MAKEFILE, NE PAS OUBLIER LES FLAGS + NE PAS OUBLIER DE VERIFIER QUE LES FICHIERS DONT ON A BESOIN NE SONT PAS DES raydirECTORIES
 
+void	get_orientation(t_ray *ray, char c)
+{
+	if (c == 'N')
+	{
+		ray->dir_y = -1;
+		ray->plane_x = 0.66;
+	}
+	if (c == 'S')
+	{
+		ray->dir_y = 1;
+		ray->plane_x = -0.66;
+	}
+	if (c == 'W')
+	{
+		ray->dir_x = -1;
+		ray->plane_y = -0.66;
+	}
+	if (c == 'E')
+	{
+		ray->dir_x = 1;
+		ray->plane_y = 0.66;
+	}
+}
+
 void	get_initial_player_pos(t_ray *ray, t_map *map)
 {
 	int	i;
@@ -31,6 +55,7 @@ void	get_initial_player_pos(t_ray *ray, t_map *map)
 				printf("Player found at X = %d, Y = %d\n", j, i);
 				ray->pos_x = (double)j + 0.5;
 				ray->pos_y = (double)i + 0.5;
+				get_orientation(ray, map->map[i][j]);
 				return ;
 			}
 			j++;
@@ -174,6 +199,17 @@ void	get_textures_img(t_data *data)
 	get_texture_img(&data->tex->EA, data, data->map->path_to_ea);
 }
 
+int	convert_rgb(int	*rgb)
+{
+	return ((rgb[0] << 16) | (rgb[1] << 8) | (rgb[2]));
+}
+
+void	get_colors(t_ray *ray, t_map *map)
+{
+	ray->floor_color = convert_rgb(map->floor_RGB);
+	ray->ceiling_color = convert_rgb(map->ceiling_RGB);
+}
+
 int	main(int argc, char **argv)
 {
 	t_data	data;
@@ -185,12 +221,13 @@ int	main(int argc, char **argv)
 	data.mlx_ptr = mlx_init();
 	if (data.mlx_ptr == NULL)
 		printf("Error MLX INIT NE PAS OUBLIER D'AJOUTER LA FONCTION POUR FREE\n");
-	// mlx_get_screen_size(data.mlx_ptr, &data.ray.screenx, &data.ray.screeny);
+	mlx_get_screen_size(data.mlx_ptr, &data.ray.screen_x, &data.ray.screen_y);
 	init_raycasting(&data.ray);
 	get_textures_img(&data);
+	get_colors(&data.ray, data.map);
 	printf("Screen X = %d, screen y = %d\n", data.ray.screen_x, data.ray.screen_y);
-	data.ray.screen_x = 1600; // VALEURS TESTS, LES VRAIES VALEURS SERONT RECUP AVEC MLX GET SCREEN SIZE
-	data.ray.screen_y = 900; // SAME AS ABOVE
+	/* data.ray.screen_x = 1600; // VALEURS TESTS, LES VRAIES VALEURS SERONT RECUP AVEC MLX GET SCREEN SIZE
+	data.ray.screen_y = 900; // SAME AS ABOVE */
 	printf("Screen X = %d, screen y = %d\n", data.ray.screen_x, data.ray.screen_y);
 	data.win_ptr = mlx_new_window(data.mlx_ptr, data.ray.screen_x, data.ray.screen_y, "cub3d");
 	if (data.win_ptr == NULL)

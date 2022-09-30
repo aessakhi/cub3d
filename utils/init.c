@@ -41,10 +41,6 @@ void	init_raycasting(t_ray *ray)
 {
 	ray->pos_x = 0;
 	ray->pos_y = 0;
-	ray->dir_x = 0;
-	ray->dir_y = -1;
-	ray->plane_x = 0.66;
-	ray->plane_y = 0;
 	ray->raydir_x = 0;
 	ray->raydir_y = 0;
 	ray->camera_x = 0;
@@ -61,8 +57,6 @@ void	init_raycasting(t_ray *ray)
 	ray->drawstart = 0;
 	ray->drawend = 0;
 	ray->x = 0;
-	ray->screen_x = 0;
-	ray->screen_y = 0;
 	ray->rot_speed = 0.033;
 	ray->move_speed = 0.10;
 }
