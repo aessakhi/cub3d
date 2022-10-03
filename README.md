@@ -11,4 +11,5 @@ Etapes:
 - Texture ok 29/09
 - Sol/Plafond ok 30/09
 - Orientation ok 30/09
-- Manque norme, flags et done
+- Flags done 3/10
+- Manque norme et dernieres verifs
