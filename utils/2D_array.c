@@ -6,7 +6,7 @@
 /*   By: aessakhi <aessakhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 17:13:19 by aessakhi          #+#    #+#             */
-/*   Updated: 2022/09/15 17:52:45 by aessakhi         ###   ########.fr       */
+/*   Updated: 2022/10/03 19:32:27 by aessakhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	get_max_line_size(char	**array)
 	line_size = 0;
 	while (array[i])
 	{
-		if (ft_strlen(array[i]) > line_size)
+		if ((int)ft_strlen(array[i]) > line_size)
 			line_size = ft_strlen(array[i]);
 		i++;
 	}

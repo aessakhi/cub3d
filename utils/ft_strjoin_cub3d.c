@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strjoin_2.c                                     :+:      :+:    :+:   */
+/*   ft_strjoin_cub3D.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aessakhi <aessakhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/15 17:16:30 by aessakhi          #+#    #+#             */
-/*   Updated: 2022/10/03 19:12:50 by aessakhi         ###   ########.fr       */
+/*   Created: 2022/09/15 17:12:20 by aessakhi          #+#    #+#             */
+/*   Updated: 2022/10/03 19:15:04 by aessakhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
 
-char	*ft_strjoin_2(char *s1, char *s2)
+char		*ft_strjoin_cub3d(char *s1, char *s2)
 {
 	int		i;
 	int		j;
@@ -25,7 +25,7 @@ char	*ft_strjoin_2(char *s1, char *s2)
 		s1 = malloc(sizeof(char) * 1);
 		s1[0] = '\0';
 	}
-	dest = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
+	dest = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 2));
 	while (s1[i])
 	{
 		dest[i] = s1[i];
@@ -36,7 +36,8 @@ char	*ft_strjoin_2(char *s1, char *s2)
 		dest[i + j] = s2[j];
 		j++;
 	}
-	dest[i + j] = '\0';
-	free(s2);
+	dest[i + j] = '\n';
+	dest[i + j + 1] = '\0';
+	free(s1);
 	return (dest);
 }

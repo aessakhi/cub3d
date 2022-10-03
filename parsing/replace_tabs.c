@@ -6,7 +6,7 @@
 /*   By: aessakhi <aessakhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 17:46:58 by aessakhi          #+#    #+#             */
-/*   Updated: 2022/09/15 17:47:17 by aessakhi         ###   ########.fr       */
+/*   Updated: 2022/10/03 19:43:51 by aessakhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,9 @@ void	replace_tab_by_spaces_loop(char *str, char *result, t_tab_check *tab)
 
 char	*replace_tab_by_spaces(char	*str)
 {
-	char	*result;
+	char		*result;
 	t_tab_check	tab;
-	int		n_of_tabs;
+	int			n_of_tabs;
 
 	tab.i = 0;
 	tab.j = 0;
@@ -44,7 +44,8 @@ char	*replace_tab_by_spaces(char	*str)
 	if (!isins(str, '\t'))
 		return (str);
 	n_of_tabs = count_n_of_tabs(str);
-	result = malloc(sizeof(char) * (ft_strlen(str) - n_of_tabs + (n_of_tabs * 4) + 1));
+	result = malloc(sizeof(char) * (ft_strlen(str)
+				- n_of_tabs + (n_of_tabs * 4) + 1));
 	while (str[tab.i])
 		replace_tab_by_spaces_loop(str, result, &tab);
 	result[tab.j] = '\0';

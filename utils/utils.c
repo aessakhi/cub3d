@@ -6,7 +6,7 @@
 /*   By: aessakhi <aessakhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 19:39:45 by aessakhi          #+#    #+#             */
-/*   Updated: 2022/09/15 17:20:19 by aessakhi         ###   ########.fr       */
+/*   Updated: 2022/10/03 19:20:36 by aessakhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,14 +90,14 @@ char	*ft_strtrim(char *s1, char const *set)
 
 void	print_int_array(int	*array)
 {
-	int	i;
-	char	*RGB;
+	int		i;
+	char	*rgb;
 
 	i = 0;
-	RGB = "RGB";
-	while (RGB[i])
+	rgb = "RGB";
+	while (rgb[i])
 	{
-		printf("%c: ", RGB[i]);
+		printf("%c: ", rgb[i]);
 		printf("%d\n", array[i]);
 		i++;
 	}

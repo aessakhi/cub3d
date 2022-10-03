@@ -1,42 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strjoin_2.c                                     :+:      :+:    :+:   */
+/*   my_mlx_pixel_put.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aessakhi <aessakhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/15 17:16:30 by aessakhi          #+#    #+#             */
-/*   Updated: 2022/10/03 19:12:50 by aessakhi         ###   ########.fr       */
+/*   Created: 2022/10/02 17:03:28 by aessakhi          #+#    #+#             */
+/*   Updated: 2022/10/02 17:03:51 by aessakhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
 
-char	*ft_strjoin_2(char *s1, char *s2)
+void	my_mlx_pixel_put(t_img *img, int x, int y, int color)
 {
-	int		i;
-	int		j;
-	char	*dest;
+	char	*dst;
 
-	i = 0;
-	j = 0;
-	if (!s1)
-	{
-		s1 = malloc(sizeof(char) * 1);
-		s1[0] = '\0';
-	}
-	dest = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
-	while (s1[i])
-	{
-		dest[i] = s1[i];
-		i++;
-	}
-	while (s2[j])
-	{
-		dest[i + j] = s2[j];
-		j++;
-	}
-	dest[i + j] = '\0';
-	free(s2);
-	return (dest);
+	dst = img->addr + (y * img->line_length + x * (img->bits_per_pixel / 8));
+	*(unsigned int *)dst = color;
 }

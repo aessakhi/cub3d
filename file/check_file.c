@@ -6,7 +6,7 @@
 /*   By: aessakhi <aessakhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 16:09:50 by aessakhi          #+#    #+#             */
-/*   Updated: 2022/09/15 17:19:28 by aessakhi         ###   ########.fr       */
+/*   Updated: 2022/10/03 18:21:58 by aessakhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,10 @@ void	check_arg(int argc, char **argv)
 		if (argc == 1)
 			printf("Error\nNo map specified. Usage: ./cub3d MAP_NAME.cub\n");
 		else
-			printf("Error\nIncorrect number of args. Usage: ./cub3d MAP_NAME.cub\n");
+		{
+			printf("Error\n");
+			printf("Incorrect number of args. Usage: ./cub3d MAP_NAME.cub\n");
+		}
 		exit(EXIT_FAILURE);
 	}
 	check_file_extension(argv[1], ".cub");
@@ -53,8 +56,8 @@ void	check_if_file_exists(char *file)
 	fd = open(file, O_RDWR);
 	if (fd == -1)
 	{
-		if (errno = EISDIR)
-			printf("Error\nFile is a directory\n");
+		if (errno == EISDIR)
+			printf("Error\n.cub is a directory\n");
 		else
 			printf("Error\nNo such file or directory\n");
 		exit(EXIT_FAILURE);

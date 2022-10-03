@@ -6,7 +6,7 @@
 /*   By: aessakhi <aessakhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 18:13:35 by aessakhi          #+#    #+#             */
-/*   Updated: 2022/09/28 18:14:57 by aessakhi         ###   ########.fr       */
+/*   Updated: 2022/10/03 19:50:26 by aessakhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,15 +151,15 @@ void	get_textures(char	**tmp, t_map *map);
 void	get_textures(char **tmp, t_map *map);
 void	get_textures_2(t_texture_check *tex, char **tmp, t_map *map, int i);
 void	get_map(t_texture_check *tex, char **tmp, t_map *map, int i);
-void	check_if_empty_line_in_map(t_texture_check *tex, char **tmp, t_map *map, int i);
+void	check_if_empty_line_in_map(char **tmp, t_map *map, int i);
 int		is_map(char *str);
 int		is_empty_line(char *str);
-void	get_NO(t_texture_check *tex, char **tmp, t_map *map, int i);
-void	get_SO(t_texture_check *tex, char **tmp, t_map *map, int i);
-void	get_WE(t_texture_check *tex, char **tmp, t_map *map, int i);
-void	get_EA(t_texture_check *tex, char **tmp, t_map *map, int i);
-void	get_F(t_texture_check *tex, char **tmp, t_map *map, int i);
-void	get_C(t_texture_check *tex, char **tmp, t_map *map, int i);
+void	get_no(t_texture_check *tex, char **tmp, t_map *map, int i);
+void	get_so(t_texture_check *tex, char **tmp, t_map *map, int i);
+void	get_we(t_texture_check *tex, char **tmp, t_map *map, int i);
+void	get_ea(t_texture_check *tex, char **tmp, t_map *map, int i);
+void	get_f(t_texture_check *tex, char **tmp, t_map *map, int i);
+void	get_c(t_texture_check *tex, char **tmp, t_map *map, int i);
 int		check_end_of_map(char **tmp, int i);
 char	*replace_tab_by_spaces(char	*str);
 void	replace_tab_by_spaces_loop(char *str, char *result, t_tab_check *tab);
@@ -176,7 +176,7 @@ void	free_dbl_array(char	**array);
 void	print_dbl_array(char **array);
 int		ft_strcmp(const char *s1, const char *s2);
 char	*ft_strtrim(char *s1, char const *set);
-char *ft_strjoin_cub3D(char *s1, char *s2);
+char *ft_strjoin_cub3d(char *s1, char *s2);
 char	**ft_split(char const *s, char *sep);
 int		dblarray_size(char **array);
 int		ft_atoi(const char *str);
@@ -213,18 +213,47 @@ void	check_around_space(char **str, t_error *error, int i, int j);
 //Init
 void	init_tex_check(t_texture_check *tex_check);
 void	init_map(t_map *map);
-void	init_raycasting(t_ray *ray);
+void	init_raycasting(t_ray *ray, t_data *data);
 
 //Raycasting
 void	start_raycasting(t_ray *ray, t_data *data);
 void	render(t_data data);
 
-//Drawing
-void	my_mlx_pixel_put(t_img *img, int x, int y, int color);
-
 //Hooks & loops
 int	handle_no_event(t_data *data);
 int		close_win(t_data *data);
 int	handle_keypress(int keysym, t_data *data);
+
+//Move player
+void	rotate_left(t_data *data);
+void	rotate_right(t_data *data);
+void	move_up(t_data *data);
+void	move_down(t_data *data);
+
+//Get textures img
+void	get_texture_img(t_img *img, t_data *data, char *path);
+void	get_textures_img(t_data *data);
+
+//Use colors
+int		convert_rgb(int	*rgb);
+void	get_colors(t_ray *ray, t_map *map);
+
+//Get player
+void	get_initial_player_pos(t_ray *ray, t_map *map);
+void	get_orientation(t_ray *ray, char c);
+
+//Free
+void	free_mlx(t_data *data);
+void	free_texture_img(t_img *img, t_data *data);
+void	free_textures(t_data *data);
+void	free_everything(t_data *data);
+
+//Draw
+void	my_mlx_pixel_put(t_img *img, int x, int y, int color);
+unsigned int	get_pixel_from_img(t_img *img, int x, int y);
+void	draw_wall(t_ray *ray, t_tex *tex, t_img *img, t_data *data);
+void	draw_floor(t_ray *ray, t_data *data);
+void	draw_ceiling(t_ray *ray, t_data *data);
+void	render_new_image(t_data *data);
 
 #endif

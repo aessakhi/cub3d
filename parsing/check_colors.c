@@ -6,32 +6,32 @@
 /*   By: aessakhi <aessakhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 17:51:42 by aessakhi          #+#    #+#             */
-/*   Updated: 2022/09/25 15:12:19 by aessakhi         ###   ########.fr       */
+/*   Updated: 2022/10/03 19:43:07 by aessakhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
 
-int	*get_RGB_values(t_map *map, char **tmp)
+int	*get_rgb_values(t_map *map, char **tmp)
 {
 	int	i;
-	int	*RGB;
+	int	*rgb;
 
 	i = 0;
-	RGB = malloc(sizeof(int) * 3);
+	rgb = malloc(sizeof(int) * 3);
 	while (tmp[i])
 	{
-		RGB[i] = ft_atoi(tmp[i]);
+		rgb[i] = ft_atoi(tmp[i]);
 		//NE PAS OUBLIER DE CHECK SI CE SONT TOUS DES DIGITS
-		if (RGB[i] < 0 || RGB[i] > 255)
+		if (rgb[i] < 0 || rgb[i] > 255)
 		{
-			free(RGB);
+			free(rgb);
 			free_dbl_array(tmp);
 			ft_perror_parsing(map, "Invalid RGB value");
 		}
 		i++;
 	}
-	return (RGB);
+	return (rgb);
 }
 
 void	check_color_range(t_map *map, int i)
@@ -56,9 +56,9 @@ void	check_color_range(t_map *map, int i)
 	}
 	//Besoin de check si il y a 3 couleurs
 	if (i == 4)
-		map->floor_RGB = get_RGB_values(map, tmp_range);
+		map->floor_RGB = get_rgb_values(map, tmp_range);
 	if (i == 5)
-		map->ceiling_RGB = get_RGB_values(map, tmp_range);
+		map->ceiling_RGB = get_rgb_values(map, tmp_range);
 	free_dbl_array(tmp_range);
 	//Besoin de check si les couleurs sont comprises entre 0 et 255
 }

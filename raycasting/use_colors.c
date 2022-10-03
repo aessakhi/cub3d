@@ -1,42 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strjoin_2.c                                     :+:      :+:    :+:   */
+/*   use_colors.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aessakhi <aessakhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/15 17:16:30 by aessakhi          #+#    #+#             */
-/*   Updated: 2022/10/03 19:12:50 by aessakhi         ###   ########.fr       */
+/*   Created: 2022/10/02 17:14:41 by aessakhi          #+#    #+#             */
+/*   Updated: 2022/10/02 17:15:07 by aessakhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
 
-char	*ft_strjoin_2(char *s1, char *s2)
+int	convert_rgb(int	*rgb)
 {
-	int		i;
-	int		j;
-	char	*dest;
+	return ((rgb[0] << 16) | (rgb[1] << 8) | (rgb[2]));
+}
 
-	i = 0;
-	j = 0;
-	if (!s1)
-	{
-		s1 = malloc(sizeof(char) * 1);
-		s1[0] = '\0';
-	}
-	dest = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
-	while (s1[i])
-	{
-		dest[i] = s1[i];
-		i++;
-	}
-	while (s2[j])
-	{
-		dest[i + j] = s2[j];
-		j++;
-	}
-	dest[i + j] = '\0';
-	free(s2);
-	return (dest);
+void	get_colors(t_ray *ray, t_map *map)
+{
+	ray->floor_color = convert_rgb(map->floor_RGB);
+	ray->ceiling_color = convert_rgb(map->ceiling_RGB);
 }

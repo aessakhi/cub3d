@@ -6,7 +6,7 @@
 /*   By: aessakhi <aessakhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/10 16:42:41 by aessakhi          #+#    #+#             */
-/*   Updated: 2022/09/15 17:47:40 by aessakhi         ###   ########.fr       */
+/*   Updated: 2022/10/03 19:35:06 by aessakhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,16 @@ void	get_map(t_texture_check *tex, char **tmp, t_map *map, int i)
 {
 	tmp[i] = replace_tab_by_spaces(tmp[i]);
 	tex->map = 1;
-	if (!tex->NO && !tex->SO && !tex->WE && !tex->EA && !tex->F && !tex->F && !tex->C)
+	if (!tex->NO && !tex->SO && !tex->WE && !tex->EA
+		&& !tex->F && !tex->F && !tex->C)
 	{
 		free_dbl_array(tmp);
 		ft_perror_parsing(map, "Wrong order: Map before textures/color ranges");
 	}
-	map->tmp_map = ft_strjoin_cub3D(map->tmp_map, tmp[i]);
+	map->tmp_map = ft_strjoin_cub3d(map->tmp_map, tmp[i]);
 }
 
-void	check_if_empty_line_in_map(t_texture_check *tex, char **tmp, t_map *map, int i)
+void	check_if_empty_line_in_map(char **tmp, t_map *map, int i)
 {
 	if (!check_end_of_map(tmp, i))
 	{

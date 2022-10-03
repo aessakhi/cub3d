@@ -6,7 +6,7 @@
 /*   By: aessakhi <aessakhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 17:57:05 by aessakhi          #+#    #+#             */
-/*   Updated: 2022/09/15 18:01:11 by aessakhi         ###   ########.fr       */
+/*   Updated: 2022/10/03 19:28:59 by aessakhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,9 +107,6 @@ void	check_last_wall(char **str, int i, t_error *error)
 
 void	check_line(char	**str, int	i, t_error *error)
 {
-	int	j;
-
-	j = 0;
 	//Premier et dernier caractères sont des '1'
 	check_first_wall(str, i, error);
 	check_last_wall(str, i, error);

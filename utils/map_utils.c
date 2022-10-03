@@ -6,7 +6,7 @@
 /*   By: aessakhi <aessakhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 17:59:32 by aessakhi          #+#    #+#             */
-/*   Updated: 2022/09/15 18:00:33 by aessakhi         ###   ########.fr       */
+/*   Updated: 2022/10/03 19:32:54 by aessakhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,9 @@ void	fill_every_line(t_map *map, int line_size)
 	i = 0;
 	while (map->map[i])
 	{
-		if (ft_strlen(map->map[i]) < line_size)
-			map->map[i] = append_spaces(map->map[i], line_size - ft_strlen(map->map[i]));
+		if ((int)ft_strlen(map->map[i]) < line_size)
+			map->map[i] = append_spaces(map->map[i],
+					line_size - ft_strlen(map->map[i]));
 		i++;
 	}
 }

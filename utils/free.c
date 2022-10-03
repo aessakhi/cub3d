@@ -6,7 +6,7 @@
 /*   By: aessakhi <aessakhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 17:42:36 by aessakhi          #+#    #+#             */
-/*   Updated: 2022/09/15 18:28:29 by aessakhi         ###   ########.fr       */
+/*   Updated: 2022/10/03 19:03:44 by aessakhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,4 +37,42 @@ void	free_map(t_map *map)
 	if (map)
 		free(map);
 	map = NULL;
+}
+
+void	free_mlx(t_data *data)
+{
+	if (data->win_ptr)
+		mlx_destroy_window(data->mlx_ptr, data->win_ptr);
+	if (data->img.img)
+		mlx_destroy_image(data->mlx_ptr, data->img.img);
+	if (data->mlx_ptr)
+	{
+		mlx_destroy_display(data->mlx_ptr);
+		free(data->mlx_ptr);
+	}
+}
+
+void	free_texture_img(t_img *img, t_data *data)
+{
+	if (img->img)
+		mlx_destroy_image(data->mlx_ptr, img->img);
+}
+
+void	free_textures(t_data *data)
+{
+	free_texture_img(&data->tex->NO, data);
+	free_texture_img(&data->tex->SO, data);
+	free_texture_img(&data->tex->WE, data);
+	free_texture_img(&data->tex->EA, data);
+}
+
+void	free_everything(t_data *data)
+{
+	if (data->map)
+		free_map(data->map);
+	if (data->tex)
+		free_textures(data);
+	if (data->mlx_ptr)
+		free_mlx(data);
+	exit(EXIT_SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: aessakhi <aessakhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 17:50:43 by aessakhi          #+#    #+#             */
-/*   Updated: 2022/09/15 17:51:08 by aessakhi         ###   ########.fr       */
+/*   Updated: 2022/10/03 19:29:24 by aessakhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ void	check_texture_file(char **tmp, t_map *map)
 void	check_texture_path(t_map *map, int i)
 {
 	char	**tmp;
-	int		fd;
 
 	tmp = NULL;
 	tmp = ft_split(map->param[i], " \t");
@@ -70,7 +69,6 @@ void	check_texture_path(t_map *map, int i)
 	if (i == 3)
 		map->path_to_ea = ft_strdup(tmp[1]);
 	free_dbl_array(tmp);
-	/* close(fd); */
 }
 
 void	get_texture_path(t_map *map)
