@@ -13,3 +13,6 @@ Etapes:
 - Orientation ok 30/09
 - Flags done 3/10
 - Manque norme et dernieres verifs
+
+Premier rendu foiré: oubli du mouvement droite/gauche (my bad!) et prenait en compte inutilement l'ordre des textures (je pensais qu'il fallait que l'ordre soit NO/SO/WE/EA/F/C de façon strict mais la seule chose importante est que le map ne soit pas avant les textures/couleurs).
+Corrigé le 06/10
