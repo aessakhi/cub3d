@@ -6,7 +6,7 @@
 /*   By: aessakhi <aessakhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 18:13:35 by aessakhi          #+#    #+#             */
-/*   Updated: 2022/10/03 19:50:26 by aessakhi         ###   ########.fr       */
+/*   Updated: 2022/10/06 17:42:47 by aessakhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,6 @@
 # include <X11/keysym.h>
 # include <X11/X.h>
 
-//Struct pour les info du joueurs X, Y, SPEED, ANGLE, ROTATE SPEED PEUT METTRE CA DIRECT DANS LA STRUCTURE RAYCAST ?
-
 typedef struct s_map
 {
 	char	**map;
@@ -39,52 +37,52 @@ typedef struct s_map
 	char	*path_to_so;
 	char	*path_to_we;
 	char	*path_to_ea;
-	int		*floor_RGB;
-	int		*ceiling_RGB;
+	int		*floor_rgb;
+	int		*ceiling_rgb;
 }	t_map;
 
-typedef struct	s_ray
+typedef struct s_ray
 {
-	double		pos_x; //position x du joueur
-	double		pos_y; //position y du joueur
-	double		dir_x; //vecteur de direction (commence à -1 pour N, 1 pour S, 0 sinon)
-	double		dir_y; //vecteur de direction (commence à -1 pour W, 1 pour E, 0 sinon)
-	double		plane_x; //vecteur du plan (commence à 0.66 pour E, -0.66 pour W, 0 sinon)
-	double		plane_y; //vecteur du plan (commence à 0.66 pour N, -0.66 pour S, 0 sinon)
-	double		raydir_x; //calcul de direction x du rayon
-	double		raydir_y; //calcul de direction y du rayon
-	double		camera_x; //point x sur la plan camera : Gauche ecran = -1, milieu = 0, droite = 1
-	int		map_x; // coordonée x du carré dans lequel est pos
-	int		map_y; // coordonnée y du carré dans lequel est pos
-	double		sidedist_x; //distance que le rayon parcours jusqu'au premier point d'intersection vertical (=un coté x)
-	double		sidedist_y; //distance que le rayon parcours jusqu'au premier point d'intersection horizontal (= un coté y)
-	double		deltadist_x; //distance que rayon parcours entre chaque point d'intersection vertical
-	double		deltadist_y; //distance que le rayon parcours entre chaque point d'intersection horizontal
-	int		step_x; // -1 si doit sauter un carre dans direction x negative, 1 dans la direction x positive
-	int		step_y; // -1 si doit sauter un carre dans la direction y negative, 1 dans la direction y positive
-	int		hit; // 1 si un mur a ete touche, 0 sinon
-	int		side; // 0 si c'est un cote x qui est touche (vertical), 1 si un cote y (horizontal)
-	double		perpwalldist; // distance du joueur au mur
-	int		line_height; //hauteur de la ligne a dessiner
-	int		drawstart; //position de debut ou il faut dessiner
-	int		drawend; //position de fin ou il faut dessiner
-	int		x; //permet de parcourir tous les rayons
-	int		screen_x;
-	int		screen_y;
-	int		floor_color;
-	int		ceiling_color;
-	double	rot_speed;
-	double	move_speed;
+	double		pos_x;
+	double		pos_y;
+	double		dir_x;
+	double		dir_y;
+	double		plane_x;
+	double		plane_y;
+	double		raydir_x;
+	double		raydir_y;
+	double		camera_x;
+	int			map_x;
+	int			map_y;
+	double		sidedist_x;
+	double		sidedist_y;
+	double		deltadist_x;
+	double		deltadist_y;
+	int			step_x;
+	int			step_y;
+	int			hit;
+	int			side;
+	double		perpwalldist;
+	int			line_height;
+	int			drawstart;
+	int			drawend;
+	int			x;
+	int			screen_x;
+	int			screen_y;
+	int			floor_color;
+	int			ceiling_color;
+	double		rot_speed;
+	double		move_speed;
 }					t_ray;
 
 typedef struct s_texture_check
 {
-	int	NO;
-	int	SO;
-	int	WE;
-	int	EA;
-	int	F;
-	int	C;
+	int	no;
+	int	so;
+	int	we;
+	int	ea;
+	int	f;
+	int	c;
 	int	map;
 }	t_texture_check;
 
@@ -101,7 +99,7 @@ typedef struct s_tab_check
 	int	x;
 }	t_tab_check;
 
-typedef struct	s_img
+typedef struct s_img
 {
 	void	*img;
 	char	*addr;
@@ -114,10 +112,10 @@ typedef struct	s_img
 
 typedef struct s_tex
 {
-	t_img	NO;
-	t_img	SO;
-	t_img	WE;
-	t_img	EA;
+	t_img	no;
+	t_img	so;
+	t_img	we;
+	t_img	ea;
 	double	wall_x;
 	int		x;
 	int		y;
@@ -131,129 +129,133 @@ typedef struct s_data
 	void		*win_ptr;
 	t_ray		ray;
 	t_img		img;
-	t_tex	tex[4];
+	t_tex		tex[4];
 	t_map		*map;
 }	t_data;
 
 //Check file
-void	check_arg(int argc, char **argv);
-int		check_file_extension(char	*file, char *ext);
-void	check_if_file_exists(char	*file);
+void			check_arg(int argc, char **argv);
+int				check_file_extension(char	*file, char *ext);
+void			check_if_file_exists(char	*file);
 
 //Parse file
-t_map	*get_map_from_file(char *file, t_map *map);
-int		get_number_of_lines(char *file);
-void	check_number_of_lines(int n_lines);
-void	get_file_content(char *file, char **tmp);
-void	get_textures(char	**tmp, t_map *map);
+t_map			*get_map_from_file(char *file, t_map *map);
+int				get_number_of_lines(char *file);
+void			check_number_of_lines(int n_lines);
+void			get_file_content(char *file, char **tmp);
+void			get_textures(char	**tmp, t_map *map);
 
 //Get textures
-void	get_textures(char **tmp, t_map *map);
-void	get_textures_2(t_texture_check *tex, char **tmp, t_map *map, int i);
-void	get_map(t_texture_check *tex, char **tmp, t_map *map, int i);
-void	check_if_empty_line_in_map(char **tmp, t_map *map, int i);
-int		is_map(char *str);
-int		is_empty_line(char *str);
-void	get_no(t_texture_check *tex, char **tmp, t_map *map, int i);
-void	get_so(t_texture_check *tex, char **tmp, t_map *map, int i);
-void	get_we(t_texture_check *tex, char **tmp, t_map *map, int i);
-void	get_ea(t_texture_check *tex, char **tmp, t_map *map, int i);
-void	get_f(t_texture_check *tex, char **tmp, t_map *map, int i);
-void	get_c(t_texture_check *tex, char **tmp, t_map *map, int i);
-int		check_end_of_map(char **tmp, int i);
-char	*replace_tab_by_spaces(char	*str);
-void	replace_tab_by_spaces_loop(char *str, char *result, t_tab_check *tab);
-int		count_n_of_tabs(char	*str);
-void	free_map(t_map *map);
+void			get_textures(char **tmp, t_map *map);
+void			get_textures_2(t_texture_check *tex,
+					char **tmp, t_map *map, int i);
+void			get_map(t_texture_check *tex, char **tmp, t_map *map, int i);
+void			check_if_empty_line_in_map(char **tmp, t_map *map, int i);
+int				is_map(char *str);
+int				is_empty_line(char *str);
+void			get_no(t_texture_check *tex, char **tmp, t_map *map, int i);
+void			get_so(t_texture_check *tex, char **tmp, t_map *map, int i);
+void			get_we(t_texture_check *tex, char **tmp, t_map *map, int i);
+void			get_ea(t_texture_check *tex, char **tmp, t_map *map, int i);
+void			get_f(t_texture_check *tex, char **tmp, t_map *map, int i);
+void			get_c(t_texture_check *tex, char **tmp, t_map *map, int i);
+int				check_end_of_map(char **tmp, int i);
+char			*replace_tab_by_spaces(char	*str);
+void			replace_tab_by_spaces_loop(char *str,
+					char *result, t_tab_check *tab);
+int				count_n_of_tabs(char	*str);
+void			free_map(t_map *map);
 
 //Parse map
-void	parse_map(t_map *map);
-int		get_max_line_size(char	**array);
+void			parse_map(t_map *map);
+int				get_max_line_size(char	**array);
 
 //Utils
-char	*ft_strdup(const char *s1);
-void	free_dbl_array(char	**array);
-void	print_dbl_array(char **array);
-int		ft_strcmp(const char *s1, const char *s2);
-char	*ft_strtrim(char *s1, char const *set);
-char *ft_strjoin_cub3d(char *s1, char *s2);
-char	**ft_split(char const *s, char *sep);
-int		dblarray_size(char **array);
-int		ft_atoi(const char *str);
-void	print_int_array(int	*array);
-char *ft_strjoin_2(char *s1, char *s2);
+char			*ft_strdup(const char *s1);
+void			free_dbl_array(char	**array);
+void			print_dbl_array(char **array);
+int				ft_strcmp(const char *s1, const char *s2);
+char			*ft_strtrim(char *s1, char const *set);
+char			*ft_strjoin_cub3d(char *s1, char *s2);
+char			**ft_split(char const *s, char *sep);
+int				dblarray_size(char **array);
+int				ft_atoi(const char *str);
+void			print_int_array(int	*array);
+char			*ft_strjoin_2(char *s1, char *s2);
+int				ft_str_is_digit(char *str);
 
 //Error
-void	ft_perror_parsing(t_map *map, char *error);
+void			ft_perror_parsing(t_map *map, char *error);
 
 //Check map sides
-void	check_left_side(char **str, t_error *error);
-void	check_right_side(char **str, t_error *error, int max_size);
-void	check_bottom_side(char **str, t_error *error);
-void	check_top_side(char **str, t_error *error);
+void			check_map_sides(char **str, t_error *error, int max_size);
+void			check_left_side(char **str, t_error *error);
+void			check_right_side(char **str, t_error *error, int max_size);
+void			check_bottom_side(char **str, t_error *error);
+void			check_top_side(char **str, t_error *error);
+void			check_downwards(char **str, t_error *error, int i, int j);
+void			check_upwards(char **str, t_error *error, int i, int j);
+void			check_left(char **str, t_error *error, int i, int j);
+void			check_right(char **str, t_error *error, int i, int j);
+void			check_around_space(char **str, t_error *error, int i, int j);
 
-void	get_color_range(t_map *map);
-void	get_texture_path(t_map *map);
-void	final_map_check(char **str, t_error *error);
-void	replace(char **str, char to_replace, char replaced);
-void	fill_every_line(t_map *map, int line_size);
-void	check_line(char	**str, int	i, t_error *error);
-void	check_first_last_line(char	*str);
-void	check_first_wall(char **str, int i, t_error *error);
-void	check_last_wall(char **str, int i, t_error *error);
-char	*append_spaces(char *str, int n_of_spaces);
-
-//
-void	check_downwards(char **str, t_error *error, int i, int j);
-void	check_upwards(char **str, t_error *error, int i, int j);
-void	check_left(char **str, t_error *error, int i, int j);
-void	check_right(char **str, t_error *error, int i, int j);
-void	check_around_space(char **str, t_error *error, int i, int j);
+void			get_color_range(t_map *map);
+void			get_texture_path(t_map *map);
+void			final_map_check(char **str, t_error *error, t_map *map);
+void			replace(char **str, char to_replace, char replaced);
+void			fill_every_line(t_map *map, int line_size);
+void			check_line(char **str, int i, t_error *error);
+void			check_first_last_line(char	*str, t_map *map);
+void			check_first_wall(char **str, int i, t_error *error);
+void			check_last_wall(char **str, int i, t_error *error);
+char			*append_spaces(char *str, int n_of_spaces);
 
 //Init
-void	init_tex_check(t_texture_check *tex_check);
-void	init_map(t_map *map);
-void	init_raycasting(t_ray *ray, t_data *data);
+void			init_tex_check(t_texture_check *tex_check);
+void			init_map(t_map *map);
+void			init_raycasting(t_ray *ray, t_data *data);
 
 //Raycasting
-void	start_raycasting(t_ray *ray, t_data *data);
-void	render(t_data data);
+void			start_raycasting(t_ray *ray, t_data *data);
+void			render(t_data data);
 
 //Hooks & loops
-int	handle_no_event(t_data *data);
-int		close_win(t_data *data);
-int	handle_keypress(int keysym, t_data *data);
+int				handle_no_event(t_data *data);
+int				close_win(t_data *data);
+int				handle_keypress(int keysym, t_data *data);
 
 //Move player
-void	rotate_left(t_data *data);
-void	rotate_right(t_data *data);
-void	move_up(t_data *data);
-void	move_down(t_data *data);
+void			rotate_left(t_data *data);
+void			rotate_right(t_data *data);
+void			move_up(t_data *data);
+void			move_down(t_data *data);
+void			move_right(t_data *data);
+void			move_left(t_data *data);
 
 //Get textures img
-void	get_texture_img(t_img *img, t_data *data, char *path);
-void	get_textures_img(t_data *data);
+void			get_texture_img(t_img *img, t_data *data, char *path);
+void			get_textures_img(t_data *data);
 
 //Use colors
-int		convert_rgb(int	*rgb);
-void	get_colors(t_ray *ray, t_map *map);
+int				convert_rgb(int	*rgb);
+void			get_colors(t_ray *ray, t_map *map);
 
 //Get player
-void	get_initial_player_pos(t_ray *ray, t_map *map);
-void	get_orientation(t_ray *ray, char c);
+void			get_initial_player_pos(t_ray *ray, t_map *map);
+void			get_orientation(t_ray *ray, char c);
 
 //Free
-void	free_mlx(t_data *data);
-void	free_texture_img(t_img *img, t_data *data);
-void	free_textures(t_data *data);
-void	free_everything(t_data *data);
+void			free_mlx(t_data *data);
+void			free_texture_img(t_img *img, t_data *data);
+void			free_textures(t_data *data);
+void			free_everything(t_data *data);
 
 //Draw
-void	my_mlx_pixel_put(t_img *img, int x, int y, int color);
+void			my_mlx_pixel_put(t_img *img, int x, int y, int color);
 unsigned int	get_pixel_from_img(t_img *img, int x, int y);
-void	draw_wall(t_ray *ray, t_tex *tex, t_img *img, t_data *data);
-void	draw_floor(t_ray *ray, t_data *data);
-void	draw_ceiling(t_ray *ray, t_data *data);
-void	render_new_image(t_data *data);
+void			draw_wall(t_ray *ray, t_tex *tex, t_img *img, t_data *data);
+void			draw_floor(t_ray *ray, t_data *data);
+void			draw_ceiling(t_ray *ray, t_data *data);
+void			render_new_image(t_data *data);
 
 #endif
