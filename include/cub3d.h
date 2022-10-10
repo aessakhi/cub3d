@@ -6,7 +6,7 @@
 /*   By: aessakhi <aessakhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 18:13:35 by aessakhi          #+#    #+#             */
-/*   Updated: 2022/10/06 17:42:47 by aessakhi         ###   ########.fr       */
+/*   Updated: 2022/10/10 10:43:39 by aessakhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,6 +159,7 @@ void			get_we(t_texture_check *tex, char **tmp, t_map *map, int i);
 void			get_ea(t_texture_check *tex, char **tmp, t_map *map, int i);
 void			get_f(t_texture_check *tex, char **tmp, t_map *map, int i);
 void			get_c(t_texture_check *tex, char **tmp, t_map *map, int i);
+char			**param_in_order(char **param);
 int				check_end_of_map(char **tmp, int i);
 char			*replace_tab_by_spaces(char	*str);
 void			replace_tab_by_spaces_loop(char *str,

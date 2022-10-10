@@ -6,7 +6,7 @@
 /*   By: aessakhi <aessakhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 16:18:42 by aessakhi          #+#    #+#             */
-/*   Updated: 2022/10/04 20:07:33 by aessakhi         ###   ########.fr       */
+/*   Updated: 2022/10/10 10:45:04 by aessakhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ t_map	*get_map_from_file(char *file, t_map *map)
 	free_dbl_array(tmp);
 	map->map = ft_split(map->tmp_map, "\n");
 	map->param = ft_split(map->tmp_param, "\n");
+	map->param = param_in_order(map->param);
 	get_texture_path(map);
 	get_color_range(map);
 	parse_map(map);

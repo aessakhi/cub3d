@@ -6,7 +6,7 @@
 /*   By: aessakhi <aessakhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 18:27:13 by aessakhi          #+#    #+#             */
-/*   Updated: 2022/10/04 20:07:15 by aessakhi         ###   ########.fr       */
+/*   Updated: 2022/10/10 10:03:36 by aessakhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,6 @@
 
 void	render_new_image(t_data *data)
 {
-	mlx_destroy_image(data->mlx_ptr, data->img.img);
-	data->img.img = mlx_new_image(data->mlx_ptr,
-			data->ray.screen_x, data->ray.screen_y);
-	data->img.addr = mlx_get_data_addr(data->img.img, &data->img.bits_per_pixel,
-			&data->img.line_length, &data->img.endian);
 	start_raycasting(&data->ray, data);
 	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->img.img, 0, 0);
 }
